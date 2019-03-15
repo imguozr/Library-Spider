@@ -21,9 +21,8 @@ def get_book_id(category, page):
     html.encoding = 'utf-8'
     soup = BeautifulSoup(html.text, 'lxml')
 
-    book_ids = []
     items = soup.select('.list_books span')
-    book_ids += re.findall(r'\d{10}', str(items))
+    book_ids = re.findall(r'\d{10}', str(items))
     return book_ids
 
 
