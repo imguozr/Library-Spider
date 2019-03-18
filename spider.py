@@ -1,5 +1,4 @@
 import re
-from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from multiprocessing import Pool
 from time import time
@@ -86,18 +85,46 @@ def get_book_attributions(book_id):
     return attr_dict
 
 
-def start_mp_pool(cate):
+def get_book_ids_in_category(cate):
     pool = Pool(64)
     page = get_category_page(cate)
     get = partial(get_book_ids, cate)
-    result = pool.map(get, range(1, page + 1))
+    raw_data = pool.map(get, range(1, page + 1))
     pool.close()
     pool.join()
+
+    result = []
+    for item in raw_data:
+        if isinstance(item, list):
+            for i in item:
+                result.append(i)
+        else:
+            result.append(item)
     print(result)
+    return result
+
+
+def get_latest_book_ids(day=3, category='ALL', type='ALL', location='ALL'):
+
+    url = 'http://202.119.228.6:8080/newbook/newbook_cls_book.php'
+    # 总馆00 密集书库 01
+    data = {
+        'back_days': str(day),
+        's_doctype': type,
+        'cls': category,
+        'loca_code': location
+    }
+
+    html = requests.get(url=url, headers=HEADERS, params=data)
+    soup = BeautifulSoup(html.text, 'lxml')
+
+    items = soup.select('.list_books span')
+    return re.findall(r'\d{10}', str(items))
 
 
 if __name__ == '__main__':
     ts = time()
     # start_pool()
-    start_mp_pool('A')
+    # get_book_ids_in_category('B8')
+    print(get_latest_book_ids())
     print(time() - ts)
