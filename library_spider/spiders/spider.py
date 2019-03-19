@@ -129,7 +129,7 @@ def get_latest_book_ids(day=3, category='ALL', book_type='ALL', location='ALL'):
 
 if __name__ == '__main__':
     ts = time()
-    print(get_book_attributions('0000812471'))
+    print(get_book_attributions('0000824718'))
     # get_all_book_ids_in_category('A')
     # print(get_page(category='A'))
     print(time() - ts)
