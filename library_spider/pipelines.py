@@ -1,11 +1,15 @@
-# -*- coding: utf-8 -*-
+import pymongo
 
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+from library_spider import settings
 
 
 class LibrarySpiderPipeline(object):
+    def __init__(self):
+        self.client = pymongo.MongoClient(host=settings.MONGODB_HOST, port=settings.MONGODB_PORT)
+        self.db = self.client[settings.MONGODB_DB]
+        self.collection = self.db[settings.MONGODB_COLLECTION]
+
     def process_item(self, item, spider):
+        book_item = dict(item)
+        self.collection.insert(book_item)
         return item
