@@ -2,8 +2,6 @@
 
 import scrapy
 
-from library_spider.items import BookItem
-
 
 class BookSpider(scrapy.Spider):
     name = 'book'
@@ -13,8 +11,6 @@ class BookSpider(scrapy.Spider):
 
     def parse(self, response):
         book_dict = {}
-
-        book_item = BookItem()
 
         for each in response.xpath('//dl[@class="booklist"]'):
             # 属性名
@@ -48,48 +44,11 @@ class BookSpider(scrapy.Spider):
                 else:
                     book_dict[key] = value
 
-        # print(book_dict)
-        if book_dict == {}:
-            return None
-        else:
-            bool_url = response.url
-            book_id = bool_url.split('=')[1]
-            book_item['id'] = book_id
+            if book_dict != {}:
+                bool_url = response.url
+                book_id = bool_url.split('=')[1]
+                book_dict['id'] = book_id
+            else:
+                return None
 
-            for key in book_dict:
-                if key == '题名':
-                    book_item['title'] = book_dict[key]
-                elif key == '出版发行项':
-                    book_item['publisher'] = book_dict[key]
-                elif key == '个人责任者':
-                    book_item['author'] = book_dict[key]
-                elif key == '个人次要责任者':
-                    book_item['sub_author'] = book_dict[key]
-                elif key == 'ISBN':
-                    book_item['isbn'] = book_dict[key]
-                elif key == '定价':
-                    book_item['price'] = book_dict[key]
-                elif key == '载体形态项':
-                    book_item['carrier'] = book_dict[key]
-                elif key == '丛编项':
-                    book_item['cluster_item'] = book_dict[key]
-                elif key == '学科主题':
-                    book_item['subject'] = book_dict[key]
-                elif key == '中图法分类号':
-                    book_item['category'] = book_dict[key]
-                elif key == '题名责任附注':
-                    book_item['author_notes'] = book_dict[key]
-                elif key == '版本附注':
-                    book_item['version_notes'] = book_dict[key]
-                elif key == '出版发行附注':
-                    book_item['publisher_notes'] = book_dict[key]
-                elif key == '书目附注':
-                    book_item['bibliographic_notes'] = book_dict[key]
-                elif key == '提要文摘附注':
-                    book_item['abstract'] = book_dict[key]
-                elif key == '豆瓣简介':
-                    book_item['douban_description'] = book_dict[key]
-                else:
-                    book_item['other'] = book_dict[key]
-
-            return book_item
+        return book_dict

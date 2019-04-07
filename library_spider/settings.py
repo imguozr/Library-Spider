@@ -22,7 +22,7 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) ' \
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 128
+CONCURRENT_REQUESTS = 256
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -65,9 +65,9 @@ CONCURRENT_REQUESTS = 128
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'library_spider.pipelines.LibrarySpiderPipeline': 300,
+    'library_spider.pipelines.MongoPipeline': 300,
 }
-MONGODB_HOST = 'mongo.guozr.im'
+MONGODB_HOST = 'db.guozr.im'
 MONGODB_PORT = 27017
 MONGODB_DB = 'library'
 MONGODB_COLLECTION = 'books'
@@ -92,3 +92,7 @@ MONGODB_COLLECTION = 'books'
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+# DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+# REDIS_URL = 'redis://:foobared@db.guozr.im:6379'
