@@ -3,4 +3,4 @@ ENV PATH /usr/local/bin:$PATH
 ADD . /code
 WORKDIR /code
 RUN pip3 install -r requirements.txt
-CMD scrapy crwal book
+CMD scrapy crawl book
