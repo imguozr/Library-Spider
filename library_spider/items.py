@@ -26,3 +26,4 @@ class BookItem(scrapy.Item):
     bibliographic_notes = scrapy.Field()  # 书目附注
     abstract = scrapy.Field()  # 提要文摘附注
     douban_description = scrapy.Field()  # 豆瓣简介
+    other = scrapy.Field()
