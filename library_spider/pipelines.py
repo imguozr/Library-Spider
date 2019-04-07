@@ -11,5 +11,5 @@ class LibrarySpiderPipeline(object):
 
     def process_item(self, item, spider):
         book_item = dict(item)
-        self.collection.insert(book_item)
+        self.collection.update_one(book_item, {'$set': book_item}, upsert=True)
         return item

@@ -67,7 +67,7 @@ CONCURRENT_REQUESTS = 128
 ITEM_PIPELINES = {
     'library_spider.pipelines.LibrarySpiderPipeline': 300,
 }
-MONGODB_HOST = '127.0.0.1'
+MONGODB_HOST = 'mongo.guozr.im'
 MONGODB_PORT = 27017
 MONGODB_DB = 'library'
 MONGODB_COLLECTION = 'books'

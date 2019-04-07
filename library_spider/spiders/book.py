@@ -9,8 +9,7 @@ class BookSpider(scrapy.Spider):
     name = 'book'
     allowed_domains = ['202.119.228.6:8080']
     start_urls = ['http://202.119.228.6:8080/opac/item.php?marc_no=' + '%010d' % id
-                  for id in range(376200, 10000000)]
-    # start_urls = ['http://202.119.228.6:8080/opac/item.php?marc_no=0010805345']
+                  for id in range(1, 10000000)]
 
     def parse(self, response):
         book_dict = {}
