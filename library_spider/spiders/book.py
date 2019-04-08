@@ -2,6 +2,7 @@
 
 import logging
 import scrapy
+# from scrapy_redis.spiders import RedisSpider
 
 
 class BookSpider(scrapy.Spider):

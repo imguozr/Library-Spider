@@ -93,9 +93,9 @@ MONGODB_COLLECTION = 'books'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
-# DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
-# REDIS_URL = 'redis://:foobared@db.guozr.im:6379'
+SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+REDIS_URL = 'redis://:foobared@db.guozr.im:6379'
 
 LOG_FILE = 'library-spider.log'
 LOG_LEVEL = 'INFO'
