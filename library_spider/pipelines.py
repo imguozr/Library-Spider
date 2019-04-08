@@ -1,6 +1,7 @@
+import logging
+
 import pymongo
 import pymongo.errors
-import logging
 
 from library_spider import settings
 

@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import scrapy
-# from scrapy_redis.spiders import RedisSpider
+
+from scrapy_redis.spiders import RedisSpider
 
 
-class BookSpider(scrapy.Spider):
+class BookSpider(RedisSpider):
     name = 'book'
+    redis_key = 'book:start_urls'
     allowed_domains = ['202.119.228.6:8080']
-    start_urls = ['http://202.119.228.6:8080/opac/item.php?marc_no=' + '%010d' % id
-                  for id in range(1, 10000000)]
-    # start_urls = ['http://202.119.228.6:8080/opac/item.php?marc_no=0010150510']
 
     def parse(self, response):
         book_dict = {}
