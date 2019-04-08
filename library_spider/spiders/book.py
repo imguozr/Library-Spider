@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import scrapy
 
 
@@ -8,9 +9,12 @@ class BookSpider(scrapy.Spider):
     allowed_domains = ['202.119.228.6:8080']
     start_urls = ['http://202.119.228.6:8080/opac/item.php?marc_no=' + '%010d' % id
                   for id in range(1, 10000000)]
+    # start_urls = ['http://202.119.228.6:8080/opac/item.php?marc_no=0010150510']
 
     def parse(self, response):
         book_dict = {}
+        bool_url = response.url
+        book_id = bool_url.split('=')[1]
 
         for each in response.xpath('//dl[@class="booklist"]'):
             # 属性名
@@ -39,16 +43,25 @@ class BookSpider(scrapy.Spider):
                 if key == '题名/责任者':
                     book_dict['题名'] = value.split('/')[0]
                 elif key == 'ISBN及定价':
-                    book_dict['ISBN'] = value.split('/')[0]
-                    book_dict['定价'] = value.split('/')[1]
+                    isbn = value.split('/')[0]
+                    try:
+                        price = value.split('/')[1]
+                        if price != '':
+                            book_dict['定价'] = price
+                    except IndexError:
+                        logging.log(logging.INFO, '有第二个ISBN🤯')
+                    if 'ISBN' in book_dict:
+                        book_dict['ISBN'] = [book_dict.get('ISBN')] + [isbn]
+                    else:
+                        book_dict['ISBN'] = isbn
                 else:
                     book_dict[key] = value
 
-            if book_dict != {}:
-                bool_url = response.url
-                book_id = bool_url.split('=')[1]
-                book_dict['id'] = book_id
-            else:
-                return None
+        if book_dict != {}:
+            book_dict['id'] = book_id
+            logging.log(logging.INFO, '当前爬取对象id: %s ✌️' % book_id)
+        else:
+            logging.log(logging.INFO, '没有和id: %s 对应的书😢' % book_id)
+            return None
 
         return book_dict

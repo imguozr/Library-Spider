@@ -22,7 +22,7 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) ' \
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 256
+CONCURRENT_REQUESTS = 128
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -96,3 +96,6 @@ MONGODB_COLLECTION = 'books'
 # SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
 # DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
 # REDIS_URL = 'redis://:foobared@db.guozr.im:6379'
+
+LOG_FILE = 'library-spider.log'
+LOG_LEVEL = 'INFO'
