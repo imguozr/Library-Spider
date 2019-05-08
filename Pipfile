@@ -1,6 +1,6 @@
 [[source]]
 name = "pypi"
-url = "https://aliyun.mirrors.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 verify_ssl = true
 
 [dev-packages]
@@ -13,6 +13,7 @@ redis = "*"
 requests = "*"
 scrapy = "*"
 scrapy-redis = "*"
+urllib3 = ">=1.24.2"
 
 [requires]
 python_version = "3.6"
